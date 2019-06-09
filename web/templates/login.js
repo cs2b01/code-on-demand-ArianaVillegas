@@ -16,7 +16,7 @@ function getData(){
             data : message,
             dataType:'json',
             success: function(response){
-                //$('#action').html(response['statusText']);
+                //alert(JSON.stringify(response));
             },
             error: function(response){
                 //alert(JSON.stringify(response));
