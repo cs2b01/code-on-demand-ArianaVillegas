@@ -66,12 +66,12 @@ def create_user():
 
 @app.route('/messages', methods = ['POST'])
 def create_message():
-    c = json.loads(request.form['values'])
+    message = json.loads(request.data)
     message = entities.Message(
-        content=c['content'],
+        content=message['content'],
         sent_on=datetime.datetime.now(),
-        user_from_id=c['user_from_id'],
-        user_to_id=c['user_to_id']
+        user_from_id=message['user_from_id'],
+        user_to_id=message['user_to_id']
     )
     session = db.getSession(engine)
     session.add(message)
@@ -130,12 +130,24 @@ def authenticate():
             ).filter(entities.User.username == username
             ).filter(entities.User.password == password
             ).one()
+        session['logged_user'] = user.id
         message = {'message': 'Authorized'}
         return Response(message, status=200, mimetype='application/json')
     except Exception:
         message = {'message': 'Unauthorized'}
         return Response(message, status=401, mimetype='application/json')
 
+@app.route('/current', methods = ["GET"])
+def current_user():
+    db_session = db.getSession(engine)
+    user = db_session.query(entities.User).filter(
+        entities.User.id == session['logged_user']
+        ).first()
+    return Response(json.dumps(
+            user,
+            cls=connector.AlchemyEncoder),
+            mimetype='application/json'
+        )
 
 if __name__ == '__main__':
     app.secret_key = ".."

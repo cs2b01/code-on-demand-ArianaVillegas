@@ -1,6 +1,7 @@
 function getData(){
         $('#no').hide();
         $('#yes').hide();
+        $('#chat').hide();
         $('#loading').show();
         var username = $('#username').val();
         var password = $('#password').val();
@@ -25,6 +26,7 @@ function getData(){
                     $('#loading').hide();
                 }else{
                     $('#yes').show();
+                    $('#chat').show();
                     $('#loading').hide();
                 }
             }
