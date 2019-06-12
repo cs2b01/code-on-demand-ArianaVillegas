@@ -50,7 +50,7 @@ def create_test_users():
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    c =  json.loads(request.form['values'])
+    c = json.loads(request.form['values'])
     user = entities.User(
         username=c['username'],
         name=c['name'],
@@ -66,17 +66,20 @@ def create_user():
 
 @app.route('/messages', methods = ['POST'])
 def create_message():
-    message = json.loads(request.data)
-    message = entities.Message(
-        content=message['content'],
-        sent_on=datetime.datetime.now(),
-        user_from_id=message['user_from_id'],
-        user_to_id=message['user_to_id']
-    )
-    session = db.getSession(engine)
-    session.add(message)
-    session.commit()
-    return 'Created Message'
+    try:
+        message = json.loads(request.data)
+        message = entities.Message(
+            content=message['content'],
+            sent_on=datetime.datetime.now(),
+            user_from_id=message['user_from_id'],
+            user_to_id=message['user_to_id']
+        )
+        session = db.getSession(engine)
+        session.add(message)
+        session.commit()
+        return Response(status=200, mimetype='application/json')
+    except Exception:
+        return Response(status=401, mimetype='application/json')
 
 @app.route('/messages/<id>', methods = ['GET'])
 def get_message(id):
@@ -93,7 +96,7 @@ def get_message(id):
 def get_messages():
     sessionc = db.getSession(engine)
     dbResponse = sessionc.query(entities.Message)
-    data = dbResponse[:]
+    data = dbResponse[::-1]
     return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype='application/json')
 
 @app.route('/messages', methods = ['PUT'])

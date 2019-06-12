@@ -17,23 +17,23 @@
                 <label id="cu_name"></label>
             </div><br/>
             <script>whoami();</script>
-                Usuarios<br/>
+                <h2>Usuarios</h2>
                 <div id="allusers">
                     <script>allusers();</script>
                 </div>
             </td>
             <td width="75%">
-                Mensajes<br/><br/>
+                <h2>Mensajes</h2>
                 <div id="newmessage">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" placeholder="Enter Message" aria-label="Enter Message" aria-describedby="basic-addon2">
-                      <div class="input-group-append">
-                        <input class="btn btn-success-secondary" value="Send" type="button" onclick="newmessage()">
+                      <input type="text" class="form-control" id="content" placeholder="Enter Message" aria-label="Enter Message" aria-describedby="basic-addon2"/>
+                      <div id="Enviar" class="input-group-append">
                       </div>
                     </div>
+                    <label id="confirmacion"></label>
                 </div>
                 <div id="allmessages">
-                    <script>allmessages();</script>
+                    <script></script>
                 </div>
             </td>
         </tr>
