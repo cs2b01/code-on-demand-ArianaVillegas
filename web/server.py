@@ -152,6 +152,31 @@ def current_user():
             mimetype='application/json'
         )
 
+@app.route('/messages/<user_from_id>/<user_to_id>', methods = ['GET'])
+def get_messages1(user_from_id, user_to_id ):
+    db_session = db.getSession(engine)
+    messages1 = db_session.query(entities.Message).filter(
+        entities.Message.user_from_id == user_from_id).filter(
+        entities.Message.user_to_id == user_to_id
+    )
+    messages2 = db_session.query(entities.Message).filter(
+        entities.Message.user_from_id == user_to_id).filter(
+        entities.Message.user_to_id == user_from_id
+    )
+    data1 = []
+    data2 = []
+    for message in messages1:
+        data1.append(message)
+    for message in messages2:
+        data2.append(message)
+    data = [data1,data2]
+    return Response(json.dumps(data, cls=connector.AlchemyEncoder), mimetype='application/json')
+
+@app.route('/logout', methods = ["GET"])
+def logout():
+    session.clear()
+    return 'index.html'
+
 if __name__ == '__main__':
     app.secret_key = ".."
     app.run(port=8080, threaded=True, host=('127.0.0.1'))

@@ -12,11 +12,16 @@
         <tr>
             <td width="25%">
             <div style="text-align:center">
+                <script>whoami();</script>
+                <div>
+                    <img src="/static/images/avatar.png" width="60%" height="auto">
+                    <br/><br/>
+                </div>
                 <label id="cu_username" style="text-align:center"></label>
                 <br/>
-                <label id="cu_name"></label>
+                <label id="cu_name"></label><br/>
+                <input type="button" class="btn btn-info" value="Logout" onclick="logout()"/>
             </div><br/>
-            <script>whoami();</script>
                 <h2>Usuarios</h2>
                 <div id="allusers">
                     <script>allusers();</script>
