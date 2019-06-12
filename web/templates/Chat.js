@@ -49,8 +49,11 @@ function showmessages(to_id){
         success: function(response){
             //alert(JSON.stringify(response));
             var from_id = response['id'];
-            allmessages(from_id,to_id);
-            $('#Enviar').append('<input type="button" class="btn btn-success-secondary" value="Send" onclick="newMessage('+from_id+','+to_id+')"/>');
+            while(true){
+                await sleep(2000);
+                allmessages(from_id,to_id);
+                $('#Enviar').append('<input type="button" class="btn btn-success-secondary" value="Send" onclick="newMessage('+from_id+','+to_id+')"/>');
+            }
         },
         error: function(response){
             alert(JSON.stringify(response));
